@@ -3,15 +3,11 @@ from django.contrib import messages
 from . import covid_data # Import your covid_data.py module
 import os
 import pandas as pd
-# No longer need base64, io, matplotlib.pyplot directly here for plotting
-# import base64
-# import io
-# import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 import uuid # Needed to generate unique filenames for saved plots
 from django.conf import settings # Needed to access STATIC_URL and BASE_DIR
 
-def generate_all_dashboard_static_content():
+def generate_all_dashboard_static_content(request):
     """
     Calls all functions in covid_data.py that generate plots, maps, tables, and Bokeh visualizations,
     saving them to the static directory.
@@ -50,7 +46,7 @@ def generate_all_dashboard_static_content():
         return True
     except Exception as e:
         print(f"Error generating static content: {e}")
-        messages.error(None, f'Error generating static content: {e}')  # 'None' used when request isn't available
+        messages.error(request, f'Error generating static content: {e}')  # 'None' used when request isn't available
         return False
 
 def trigger_plot_generation_view(request):

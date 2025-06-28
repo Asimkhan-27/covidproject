@@ -32,6 +32,6 @@ class ChartTriggerAdmin(admin.ModelAdmin):
         return custom_urls + urls
 
     def generate_charts(self, request):
-        generate_all_dashboard_static_content()
+        generate_all_dashboard_static_content(request)
         self.message_user(request, "✅ Charts generated successfully.")
         return HttpResponseRedirect("../")
