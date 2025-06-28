@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock title %}
+
+{% block header_content %}
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight">
+        ℹ️ About This COVID-19 Dashboard Project
+    </h1>
+    <p class="text-lg md:text-xl max-w-3xl mx-auto">
+        Discover the purpose, data sources, and technologies that power this comprehensive visualization of the global pandemic.
+    </p>
+{% endblock header_content %}
+
+{% block main_content %}
+    <section class="py-8 px-4 bg-white rounded-lg shadow-md border border-gray-200 mb-8">
+        <h2 class="text-2xl font-bold mb-4 text-blue-800 text-center md:text-left">{{ intro_heading }}</h2>
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            {{ intro_text }}
+        </p>
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            {{ purpose_text }}
+        </p>
+    </section>
+
+    <section class="py-8 px-4 bg-white rounded-lg shadow-md border border-gray-200 mb-8">
+        <h2 class="text-2xl font-bold mb-4 text-blue-800 text-center md:text-left">{{ data_source_heading }}</h2>
+        <p class="text-lg text-gray-700 mb-4">
+            The reliability and accuracy of our insights depend heavily on the quality of our data. We meticulously source our data from highly credible and publicly available repositories.
+        </p>
+        <ul class="list-disc list-inside text-lg text-gray-700 space-y-2 pl-4">
+            {% for source in data_sources_list %}
+                <li>{{ source }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="py-8 px-4 bg-white rounded-lg shadow-md border border-gray-200">
+        <h2 class="text-2xl font-bold mb-4 text-blue-800 text-center md:text-left">{{ technologies_heading }}</h2>
+        <p class="text-lg text-gray-700 mb-4">
+            This dashboard is a testament to the power of modern web development and data science libraries. Below are the core technologies that bring this project to life:
+        </p>
+        <ul class="list-disc list-inside text-lg text-gray-700 space-y-2 pl-4">
+            {% for tech in technologies_list %}
+                <li>{{ tech }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock main_content %}

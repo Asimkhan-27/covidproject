@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}COVID-19 Data Dashboard{% endblock title %}</title>
+
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- External Bokeh Stylesheet (kept as it's library specific) -->
+    <link rel="stylesheet" href="https://cdn.bokeh.org/bokeh/release/bokeh-3.2.2.min.css" />
+
+    <!-- Bokeh Script (kept as it's library specific) -->
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-3.2.2.min.js"></script>
+
+    <!-- Tailwind CSS CDN for quick setup -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Load Django Static Files  -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <link rel="shortcut icon" href="{% static 'favicon.png' %}" type="image/x-icon">
+
+    {% block extra_css %}{% endblock extra_css %} 
+</head>
+
+<body class="font-inter bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-blue-700 to-blue-500 text-white p-8 text-center shadow-lg">
+        <div class="container mx-auto">
+            {% block header_content %}
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight">
+                🦠 COVID-19 Data Dashboard
+            </h1>
+            <p class="text-lg md:text-xl max-w-3xl mx-auto">
+                Explore global COVID-19 data through interactive and insightful visualizations.
+            </p>
+            {% endblock header_content %}
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+<nav class="bg-blue-800 text-white p-4 shadow-md sticky top-0 z-50">
+    <div class="container mx-auto flex justify-between items-center flex-wrap">
+        <h2 class="text-2xl font-semibold text-white">Dashboard Nav</h2>
+        <button class="lg:hidden text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75 p-2 rounded-md" id="navToggle" aria-controls="mobileNavMenu" aria-expanded="false">
+            &#9776; <!-- Hamburger Icon -->
+        </button>
+        <div class="hidden lg:flex space-x-6" id="desktopNavLinks">
+            <a href="{% url 'dashboard:home' %}" class="py-2 px-3 rounded-md hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75">Home</a>
+            <a href="{% url 'dashboard:dashboard_charts' %}" class="py-2 px-3 rounded-md hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75">View Charts</a>
+            <a href="{% url 'dashboard:summary' %}" class="py-2 px-3 rounded-md hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75">Summary</a>
+            <a href="{% url 'dashboard:about_project' %}" class="py-2 px-3 rounded-md hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75">About Project</a>
+        </div>
+        <!-- Mobile Menu - Initially hidden, toggled by JS -->
+        {# ADDED 'hidden' CLASS HERE #}
+        <div class="hidden lg:hidden w-full mt-4 flex flex-col space-y-2 text-center" id="mobileNavMenu">
+            <a href="{% url 'dashboard:home' %}" class="block py-2 px-3 rounded-md hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75">Home</a>
+            <a href="{% url 'dashboard:dashboard_charts' %}" class="block py-2 px-3 rounded-md hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75">View Charts</a>
+            <a href="{% url 'dashboard:summary' %}" class="block py-2 px-3 rounded-md hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75">Summary</a>
+            <a href="{% url 'dashboard:about_project' %}" class="block py-2 px-3 rounded-md hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75">About Project</a>
+        </div>
+    </div>
+</nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow py-8 px-4"> 
+        {% block main_content %}
+        <!-- Page-specific main content will go here -->
+        {% endblock main_content %}
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-gray-300 py-10 px-4 mt-8">
+        <div class="container mx-auto">
+            <p class="text-center text-sm text-gray-500">&copy; 2025 COVID-19 Dashboard. Built with ❤️ using Django, Pandas, Matplotlib, Bokeh, and Folium.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+    {% block extra_js %}{% endblock extra_js %}
+</body>
+</html>

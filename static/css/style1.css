@@ -1,0 +1,286 @@
+/* CSS Custom Properties (Variables) for Consistent Theming */
+:root {
+    --color-primary: #1e3a8a; /* Dark Blue */
+    --color-secondary: #3b82f6; /* Medium Blue */
+    --color-accent: #fcd34d; /* Amber/Yellow */
+    --color-text-dark: #1f2937; /* Dark Gray */
+    --color-text-light: #f9fafb; /* Light Gray */
+    --color-bg-light: #f9fafb; /* Off-White */
+    --color-bg-dark: #111827; /* Very Dark Gray */
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 2rem;
+    --border-radius-sm: 0.375rem; /* 6px */
+    --border-radius-md: 0.75rem; /* 12px */
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Base Styles for Typography and Global Look */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-bg-light);
+    color: var(--color-text-dark);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased; /* Smoother fonts */
+    -moz-osx-font-smoothing: grayscale; /* Smoother fonts */
+    display: flex;
+    flex-direction: column; /* For sticky footer */
+    min-height: 100vh; /* For sticky footer */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+h1, h2, h3, h4 {
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-primary);
+}
+
+h1 {
+    font-size: 2.5rem; /* ~40px */
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+@media (min-width: 768px) {
+    h1 {
+        font-size: 3.5rem; /* ~56px */
+    }
+}
+
+h2 {
+    font-size: 1.75rem; /* ~28px */
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+@media (min-width: 768px) {
+    h2 {
+        font-size: 2.25rem; /* ~36px */
+    }
+}
+.card h2 {
+    text-align: left; /* Card titles left aligned */
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+    font-size: 1rem;
+}
+figcaption {
+    font-size: 0.875rem; /* ~14px */
+    color: #6b7280; /* Gray-500 */
+    margin-top: var(--spacing-sm);
+    line-height: 1.4;
+}
+
+a {
+    color: var(--color-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+a:hover {
+    color: var(--color-primary);
+}
+
+/* Accessibility: Focus States */
+button:focus,
+a:focus,
+input:focus,
+textarea:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: var(--border-radius-sm);
+}
+
+/* Header Styling */
+.site-header {
+    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+    color: var(--color-text-light);
+    padding: var(--spacing-lg) 0;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+}
+.site-header p {
+    max-width: 800px;
+    margin: var(--spacing-md) auto 0;
+    font-size: 1.125rem; /* ~18px */
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Navigation Bar */
+.site-nav {
+    background-color: var(--color-primary);
+    padding: var(--spacing-md) 0;
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Ensure it stays on top */
+}
+.site-nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+.site-nav h2 { /* Logo/Brand in nav */
+    font-size: 1.5rem;
+    color: var(--color-text-light);
+    margin: 0;
+}
+.nav-links {
+    display: flex;
+    gap: var(--spacing-md);
+}
+.nav-links a {
+    color: var(--color-text-light);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.2s ease-in-out;
+    white-space: nowrap; /* Prevent links from wrapping */
+}
+.nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-light); /* Maintain color on hover */
+}
+/* Mobile Nav Toggle */
+.nav-toggle {
+    display: none; /* Hidden on desktop */
+    background: none;
+    border: none;
+    color: var(--color-text-light);
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.2s ease-in-out;
+}
+.nav-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.mobile-nav-menu {
+    display: none; /* Hidden by default, toggled by JS */
+    width: 100%;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    text-align: center;
+}
+.mobile-nav-menu a {
+    display: block;
+    padding: var(--spacing-md);
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius-sm);
+}
+
+/* Responsive Navigation */
+@media (max-width: 767px) {
+    .nav-links {
+        display: none; /* Hide desktop nav links on small screens */
+    }
+    .nav-toggle {
+        display: block; /* Show mobile toggle */
+    }
+    .site-nav .container {
+        flex-wrap: wrap;
+    }
+}
+
+
+/* Main Content Area */
+.site-main {
+    padding: var(--spacing-lg) 0;
+    flex-grow: 1; /* For sticky footer */
+}
+
+/* Dashboard Grid using CSS Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column on mobile */
+    gap: var(--spacing-lg);
+}
+@media (min-width: 768px) { 
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr); /* FORCES TWO COLUMNS ON TABLETS AND ABOVE */
+        /* You could use: repeat(auto-fit, minmax(400px, 1fr)); if you want flexibility with min size */
+    }
+}
+/* No need for 3 columns now, as we want 2 */
+/* @media (min-width: 1024px) { 
+    .dashboard-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+} */
+
+
+/* Card Styling */
+.card {
+    background-color: #ffffff;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden; /* For rounded corners on images/iframes */
+    border: 1px solid #e5e7eb; /* Light gray border */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+.card h2 {
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary);
+}
+.card figure, .card iframe {
+    margin: 0;
+    padding: 0;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden; /* Ensures image/iframe respects card's border-radius */
+    margin-bottom: var(--spacing-md);
+    background-color: #f0f0f0; /* Placeholder background for loading images/iframes */
+    min-height: 280px; /* INCREASED MINIMUM HEIGHT FOR PLOTS/IFRAMES */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card img, .card iframe {
+    max-width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove extra space below images */
+    border: none; /* Remove iframe default border */
+}
+/* Ensure specific Bokeh/Folium content fills its card */
+.card .bk-root, .card .bk-plot-wrapper {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 350px; /* Ensure Bokeh plots have a decent height, slightly larger than card's min-height */
+}
+.card iframe {
+    width: 100%;
+    height: 500px; /* Folium maps are often fixed height, ensure they fill space */
+}
+
+
+/* Footer Styling */
+.site-footer {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-light);
+    padding: var(--spacing-lg) 0;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: auto; /* Pushes footer to the bottom */
+}
+.site-footer p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+}

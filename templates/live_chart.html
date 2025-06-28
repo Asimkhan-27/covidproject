@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Live COVID-19 Chart{% endblock %}
+
+{% block main_content %}
+<div class="container mx-auto py-8 text-center">
+    <h2 class="text-2xl font-bold mb-4 text-blue-700">Live COVID-19 Stats - Country Comparison</h2>
+
+    <form method="get" action="{% url 'dashboard:live_chart' %}" class="space-y-4">
+        <div class="flex flex-wrap justify-center items-center gap-4">
+            <!-- Country 1 Selection (Mandatory) -->
+            <div>
+                <label for="country1" class="block text-gray-700 text-sm font-bold mb-2">Select Country 1:</label>
+                <select name="country1" id="country1" 
+                        class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline min-w-[180px]">
+                    {% for c in all_countries %}
+                        <option value="{{ c }}" {% if c == country1 %}selected{% endif %}>{{ c }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Country 2 Selection (Optional) -->
+            <div>
+                <label for="country2" class="block text-gray-700 text-sm font-bold mb-2">Select Country 2 (Optional):</label>
+                <select name="country2" id="country2" 
+                        class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline min-w-[180px]">
+                    <option value="">-- Select --</option> {# Optional blank/none option #}
+                    {% for c in all_countries %}
+                        <option value="{{ c }}" {% if c == country2 %}selected{% endif %}>{{ c }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Metric (Y-axis) Selection -->
+            <div>
+                <label for="y_column" class="block text-gray-700 text-sm font-bold mb-2">Select Metric:</label>
+                <select name="y_column" id="y_column" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="Confirmed" {% if y_column == 'Confirmed' %}selected{% endif %}>Confirmed</option>
+                    <option value="Deaths" {% if y_column == 'Deaths' %}selected{% endif %}>Deaths</option>
+                    <option value="Recovered" {% if y_column == 'Recovered' %}selected{% endif %}>Recovered</option>
+                </select>
+            </div>
+
+            <!-- Start Date Selection -->
+            <div>
+                <label for="start_date" class="block text-gray-700 text-sm font-bold mb-2">Start Date:</label>
+                <input type="date" id="start_date" name="start_date" value="{{ start_date }}"
+                       class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <!-- End Date Selection -->
+            <div>
+                <label for="end_date" class="block text-gray-700 text-sm font-bold mb-2">End Date:</label>
+                <input type="date" id="end_date" name="end_date" value="{{ end_date }}"
+                       class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+        </div>
+
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4">
+            Show Chart
+        </button>
+    </form>
+
+    {% if error %}
+        <p class="text-red-600 font-semibold mt-4">{{ error }}</p>
+    {% else %}
+        <img src="{{ plot_url }}" alt="Live COVID Plot" class="mx-auto shadow-lg rounded-lg mt-8">
+    {% endif %}
+</div>
+{% endblock %}

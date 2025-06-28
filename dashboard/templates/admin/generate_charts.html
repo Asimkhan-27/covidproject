@@ -1,0 +1,12 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools %}
+  <div class="object-tools">
+    <ul>
+      <li>
+        <a href="{% url 'admin:generate-charts' %}" class="button">🔄 Generate Dashboard Charts</a>
+      </li>
+    </ul>
+  </div>
+  {{ block.super }}
+{% endblock %}

@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Interactive Charts - COVID-19 Data Dashboard{% endblock title %}
+
+{% block header_content %}
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight">
+        📊 COVID-19 Visualizations
+    </h1>
+    <p class="text-lg md:text-xl max-w-3xl mx-auto">
+        Dive deep into global COVID-19 data with our interactive charts. Each visualization offers unique insights into trends, distributions, and relationships, built to enhance your understanding. Click on any plot to view it in detail!
+    </p>
+{% endblock header_content %}
+
+{% block main_content %}
+    <!-- Introduction to Live Chart Functionality -->
+    <section class="bg-blue-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-blue-200 flex flex-col items-center justify-center text-center mb-8">
+        <h2 class="text-3xl font-bold mb-4 text-blue-800">✨ Explore Live, Custom Charts!</h2>
+        <p class="text-lg text-gray-700 mb-6 max-w-2xl">
+            Want to compare specific countries or analyze different metrics over custom date ranges?
+            Our interactive live chart allows you to dynamically generate visualizations based on your exact needs.
+            Select your countries, choose your metric, and set your dates to gain unique insights into the pandemic's impact.
+        </p>
+        <a href="{% url 'dashboard:live_chart' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg transition-colors duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-75">
+            Go to Live Chart &rarr;
+        </a>
+    </section>
+
+    <!-- Dashboard Grid: Contains all your plots and interactive elements -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="dashboard-grid"> 
+
+        <!-- Static Image Plots - Wrapped in a div for clickability -->
+        <!-- Seaborn Line Plot: Confirmed Cases Over Time -->
+        <section class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200 flex flex-col justify-between overflow-hidden cursor-pointer js-preview-trigger" data-preview-src="{% static plot1_cases %}">
+            <h2 class="text-xl font-semibold mb-3 text-blue-800">📈 Confirmed Cases Over Time</h2>
+            <figure class="m-0 p-0 rounded-md overflow-hidden mb-4 bg-gray-100 min-h-[280px] flex items-center justify-center">
+                <img src="{% static plot1_cases %}" alt="Line plot of confirmed cases over time" onerror="this.onerror=null;this.src='https://placehold.co/400x300/a3a3a3/ffffff?text=Loading+Plot...';" class="max-w-full h-auto block border-none">
+            </figure>
+        </section>
+
+        <!-- Deaths Bar Chart: Top 10 Countries -->
+        <section class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200 flex flex-col justify-between overflow-hidden cursor-pointer js-preview-trigger" data-preview-src="{% static plot2_deaths %}">
+            <h2 class="text-xl font-semibold mb-3 text-blue-800">🔴 Top 10 Countries by COVID-19 Deaths</h2>
+            <figure class="m-0 p-0 rounded-md overflow-hidden mb-4 bg-gray-100 min-h-[280px] flex items-center justify-center">
+                <img src="{% static plot2_deaths %}" alt="Bar chart of deaths by country" onerror="this.onerror=null;this.src='https://placehold.co/400x300/a3a3a3/ffffff?text=Loading+Plot...';" class="max-w-full h-auto block border-none">
+            </figure>
+        </section>
+
+        <!-- Pie Chart: Case Distribution -->
+        <section class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200 flex flex-col justify-between overflow-hidden cursor-pointer js-preview-trigger" data-preview-src="{% static plot3_pie %}">
+            <h2 class="text-xl font-semibold mb-3 text-blue-800">📊 Case Distribution</h2>
+            <figure class="m-0 p-0 rounded-md overflow-hidden mb-4 bg-gray-100 min-h-[280px] flex items-center justify-center">
+                <img src="{% static plot3_pie %}" alt="Pie chart of case distribution" onerror="this.onerror=null;this.src='https://placehold.co/400x300/a3a3a3/ffffff?text=Loading+Plot...';" class="max-w-full h-auto block border-none">
+            </figure>
+        </section>
+
+        <!-- Area Plot: Confirmed vs Recovered Cases -->
+        <section class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200 flex flex-col justify-between overflow-hidden cursor-pointer js-preview-trigger" data-preview-src="{% static plot4_area %}">
+            <h2 class="text-xl font-semibold mb-3 text-blue-800">📉 Confirmed vs Recovered Cases</h2>
+            <figure class="m-0 p-0 rounded-md overflow-hidden mb-4 bg-gray-100 min-h-[280px] flex items-center justify-center">
+                <img src="{% static plot4_area %}" alt="Area plot of confirmed vs recovered" onerror="this.onerror=null;this.src='https://placehold.co/400x300/a3a3a3/ffffff?text=Loading+Plot...';" class="max-w-full h-auto block border-none">
+            </figure>
+        </section>
+
+        <!-- Interactive Bokeh Line Plot -->
+        <section class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200 flex flex-col justify-between overflow-hidden cursor-pointer js-preview-trigger-bokeh">
+            <h2 class="text-xl font-semibold mb-3 text-blue-800">🧮 Interactive Confirmed Cases (Bokeh)</h2>
+            <div class="bokeh-plot-container w-full h-full min-h-[350px]"> {# Restored Tailwind sizing #}
+                {{ bokeh_script1|safe }}
+                {{ bokeh_div1|safe }}
+            </div>
+        </section>
+
+        <!-- Folium Map - Lahore -->
+        <section class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200 flex flex-col justify-between overflow-hidden cursor-pointer js-preview-trigger-iframe">
+            <h2 class="text-xl font-semibold mb-3 text-blue-800">🗺️ COVID Map: Lahore</h2>
+            <figure class="m-0 p-0 rounded-md overflow-hidden mb-4 bg-gray-100 min-h-[280px] flex items-center justify-center">
+                <iframe src="{% static 'folium_map.html' %}" width="100%" height="500" title="Map of COVID-19 data in Lahore" loading="lazy" class="w-full h-full border-none"></iframe>
+            </figure>
+        </section>
+
+        <!-- Folium Map - Global Top 10 -->
+        <section class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200 flex flex-col justify-between overflow-hidden cursor-pointer js-preview-trigger-iframe">
+            <h2 class="text-xl font-semibold mb-3 text-blue-800">🌍 Top 10 Affected Countries – Global Map</h2>
+            <figure class="m-0 p-0 rounded-md overflow-hidden mb-4 bg-gray-100 min-h-[280px] flex items-center justify-center">
+                <iframe src="{% static 'folium_global.html' %}" width="100%" height="500" title="Map of top 10 affected countries" loading="lazy" class="w-full h-full border-none"></iframe>
+            </figure>
+        </section>
+
+        <!-- Scatter Plot: Confirmed vs Deaths -->
+        <section class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200 flex flex-col justify-between overflow-hidden cursor-pointer js-preview-trigger" data-preview-src="{% static plot5_scatter %}">
+            <h2 class="text-xl font-semibold mb-3 text-blue-800">🧪 Confirmed vs Deaths</h2>
+            <figure class="m-0 p-0 rounded-md overflow-hidden mb-4 bg-gray-100 min-h-[280px] flex items-center justify-center">
+                <img src="{% static plot5_scatter %}" alt="Scatter plot of confirmed vs deaths" onerror="this.onerror=null;this.src='https://placehold.co/400x300/a3a3a3/ffffff?text=Loading+Plot...';" class="max-w-full h-auto block border-none">
+            </figure>
+        </section>
+
+        <!-- Heatmap: Correlation Heatmap -->
+        <section class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200 flex flex-col justify-between overflow-hidden cursor-pointer js-preview-trigger" data-preview-src="{% static plot6_heatmap %}">
+            <h2 class="text-xl font-semibold mb-3 text-blue-800">📊 Correlation Heatmap</h2>
+            <figure class="m-0 p-0 rounded-md overflow-hidden mb-4 bg-gray-100 min-h-[280px] flex items-center justify-center">
+                <img src="{% static plot6_heatmap %}" alt="Correlation heatmap" onerror="this.onerror=null;this.src='https://placehold.co/400x300/a3a3a3/ffffff?text=Loading+Plot...';" class="max-w-full h-auto block border-none">
+            </figure>
+        </section>
+
+        <!-- Bokeh Daily Cases -->
+        <section class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200 flex flex-col justify-between overflow-hidden cursor-pointer js-preview-trigger-bokeh">
+            <h2 class="text-xl font-semibold mb-3 text-blue-800">📆 Daily New Confirmed Cases</h2>
+            <div class="bokeh-plot-container w-full h-full min-h-[350px]"> {# Restored Tailwind sizing #}
+                {{ bokeh_script2|safe }}
+                {{ bokeh_div2|safe }}
+            </div>
+        </section>
+
+        <!-- Pakistan vs World -->
+        <section class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200 flex flex-col justify-between overflow-hidden cursor-pointer js-preview-trigger" data-preview-src="{% static plot7_pak_vs_world %}">
+            <h2 class="text-xl font-semibold mb-3 text-blue-800">🇵🇰 Pakistan vs 🌍 Global</h2>
+            <figure class="m-0 p-0 rounded-md overflow-hidden mb-4 bg-gray-100 min-h-[280px] flex items-center justify-center">
+                <img src="{% static plot7_pak_vs_world %}" alt="Line chart Pakistan vs world" onerror="this.onerror=null;this.src='https://placehold.co/400x300/a3a3a3/ffffff?text=Loading+Plot...';" class="max-w-full h-auto block border-none">
+            </figure>
+        </section>
+
+        <!-- Call to Action for Summary Table - Content moved to summary.html -->
+        <section class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200 flex flex-col items-center justify-center text-center bg-gradient-to-br from-blue-100 to-blue-50">
+            <h2 class="text-2xl font-bold mb-4 text-blue-800">📋 Need More Detail?</h2>
+            <p class="text-lg text-gray-700 mb-6">
+                For a comprehensive tabulated overview of COVID-19 metrics across countries, visit my dedicated Summary Statistics page.
+            </p>
+            <a href="{% url 'dashboard:summary' %}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition-colors duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">
+                View All Summary Stats &rarr;
+            </a>
+        </section>
+
+    </div>
+
+    <!-- The Modal/Lightbox Structure (Restored Tailwind Classes) -->
+    <div id="plotPreviewModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-[1001] hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-lg shadow-xl p-2 relative max-w-5xl w-full h-full sm:h-auto overflow-auto flex flex-col">
+            <button id="closeModalBtn" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl font-bold p-1 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors duration-200 z-10 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75" aria-label="Close Preview">&times;</button>
+            <div id="modalContent" class="flex-grow flex items-center justify-center">
+                <!-- Content (image or iframe) will be injected here by JavaScript -->
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock title %}
+
+{% block header_content %}
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight">
+        📋 Global COVID-19 Summary Statistics
+    </h1>
+    <p class="text-lg md:text-xl max-w-3xl mx-auto">
+        {{ intro_text }}
+    </p>
+{% endblock header_content %}
+
+{% block main_content %}
+    <section class="py-12 px-4 bg-blue-50 rounded-lg shadow-inner border border-blue-200 mb-8 text-center">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-blue-800">Global Overview at a Glance</h2>
+            <p class="text-lg text-gray-700 mb-8 max-w-3xl mx-auto">
+                These are the aggregated key figures representing the global impact of COVID-19, providing an immediate snapshot of the pandemic's scale.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-red-300">
+                    <h3 class="text-xl font-semibold text-red-600 mb-2">Total Confirmed Cases</h3>
+                    <p class="text-3xl font-extrabold text-gray-900">700M+</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-400">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Total Deaths</h3>
+                    <p class="text-3xl font-extrabold text-gray-900">7M+</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-green-300">
+                    <h3 class="text-xl font-semibold text-green-600 mb-2">Total Recovered</h3>
+                    <p class="text-3xl font-extrabold text-gray-900">690M+</p>
+                </div>
+            </div>
+            <p class="text-sm text-gray-500 mt-6">
+                *Numbers are approximate and based on last available data update.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-8 px-4 bg-white rounded-lg shadow-md border border-gray-200 mb-8">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6 text-blue-800 text-center">Cumulative Statistics by Country</h2>
+        <p class="text-center text-gray-700 mb-8">
+            Explore the most up-to-date summary of confirmed cases, deaths, and recoveries across the top 15 affected countries. This table is designed for quick reference and detailed numerical analysis.
+        </p>
+        <figure class="overflow-x-auto rounded-lg shadow-inner border border-gray-100 mx-auto max-w-5xl"> 
+            <iframe src="{% static 'summary_table.html' %}" width="100%" height="600" title="Summary table of COVID-19 statistics" loading="lazy" class="rounded-lg"></iframe>
+            <figcaption class="text-sm text-gray-600 mt-2 text-center">
+                Detailed summary table providing cumulative COVID-19 statistics for various countries, ideal for quick comparisons.
+            </figcaption>
+        </figure>
+    </section>
+
+    <section class="py-12 px-4 bg-gray-100 rounded-lg shadow-md border border-gray-200">
+        <div class="container mx-auto max-w-4xl text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-blue-800">Understanding the Data</h2>
+            <p class="text-lg text-gray-700 mb-4 leading-relaxed">
+                The statistics presented on this page are compiled from publicly available datasets provided by leading health organizations. While I strive for accuracy and timely updates, it's important to note that data collection and reporting methodologies can vary by country and source.
+            </p>
+            <p class="text-lg text-gray-700 mb-4 leading-relaxed">
+                I focus on cumulative figures for confirmed cases, deaths, and recoveries to offer a historical perspective on the pandemic's progression. These numbers reflect the reported totals since the outbreak began, providing a foundational understanding for further analysis.
+            </p>
+            <p class="text-lg text-gray-700 leading-relaxed">
+                For more granular daily insights and interactive visualizations, please refer to the "View Charts" section of my dashboard.
+            </p>
+        </div>
+    </section>
+{% endblock main_content %}
