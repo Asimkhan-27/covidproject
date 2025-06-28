@@ -22,7 +22,7 @@ os.makedirs(IMAGES_DIR, exist_ok=True)
 
 # Helper function to load and clean data - used by other plotting functions
 def load_clean_data():
-    csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'covid_data.csv')
+    csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'covid_data.csv')
     try:
         df = pd.read_csv(csv_path)
     except FileNotFoundError:
